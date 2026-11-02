@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  # ============================================================================
+  # JENKINS CI/CD SERVER COM JAVA 21 NATIVO
+  # Porta da Interface Web: 8084 (evitando conflito com as portas 8080 a 8083!)
+  # ============================================================================
+  jenkins:
+    image: jenkins/jenkins:lts-jdk21
+    container_name: lab-jenkins
+    ports:
+      - "8084:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      # Permite ao Jenkins acessar o socket do Docker do host para construir imagens:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+volumes:
+  jenkins_home:
+
